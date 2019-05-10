@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <StartupObject>PathFinder.Program</StartupObject>
+    <Authors>work@chrisjshields.com</Authors>
+    <Company>chrisjshields.com</Company>
+    <Description>Dijkstra based route finding</Description>
+  </PropertyGroup>
+
+</Project>
