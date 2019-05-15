@@ -1,10 +1,10 @@
 ﻿namespace PathFinder
 {
-    internal class Neighbour
+    public class Neighbour
     {
-        internal Node Node { get; }
-        internal int Distance { get; }
-        internal Neighbour(Node node, int distance)
+        public Node Node { get; }
+        public int Distance { get; }
+        public Neighbour(Node node, int distance)
         {
             Node = node;
             Distance = distance;

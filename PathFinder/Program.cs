@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace PathFinder
 {
-    internal class Program
+    public class Program
     {
         private static void Main(string[] args)
         {
@@ -16,18 +18,23 @@ namespace PathFinder
                 end = args[1].ToCharArray()[0];
             }
 
-            var pathFinder = new PathFinder(SampleMaps.CreateSampleMap());
-            bool success = pathFinder.FindShortestRoute(char.ToUpper(start), char.ToUpper(end));
-            if (success)
-                WritePathToConsole(pathFinder);
-            else
-                Console.WriteLine("Error: " + pathFinder.Error);
+            try
+            {
+                var pathFinder = new PathFinder(SampleMaps.CreateSampleMap());
+                var route = pathFinder.GetShortestRoute(char.ToUpper(start), char.ToUpper(end));
+                WriteRouteToConsole(route);
+                Console.WriteLine(Environment.NewLine + "Distance: " + pathFinder.GetDistance());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
 
-        private static void WritePathToConsole(PathFinder path)
+        private static void WriteRouteToConsole(List<Node> route)
         {
             var first = true;
-            foreach (Node node in path.GetNodeSequence())
+            foreach (Node node in route)
             {
                 if (!first)
                     Console.Write(" => ");
@@ -35,8 +42,6 @@ namespace PathFinder
                 Console.Write(node.Name);
                 first = false;
             }
-
-            Console.WriteLine(Environment.NewLine + "Distance: " + path.GetDistance());
         }
     }
 }

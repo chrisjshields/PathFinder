@@ -15,9 +15,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod1()
         {
-            bool success = _pathFinder.FindShortestRoute('B', 'H');
-            Assert.AreEqual(true, success);
-            var result = _pathFinder.GetNodeSequence();
+            var result = _pathFinder.GetShortestRoute('B', 'H');
 
             Assert.AreEqual('B', result[0].Name);
             Assert.AreEqual('D', result[1].Name);
@@ -29,9 +27,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod2()
         {
-            bool success = _pathFinder.FindShortestRoute('D', 'H');
-            Assert.AreEqual(true, success);
-            var result = _pathFinder.GetNodeSequence();
+            var result = _pathFinder.GetShortestRoute('D', 'H');
 
             Assert.AreEqual('D', result[0].Name);
             Assert.AreEqual('G', result[1].Name);
@@ -42,9 +38,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod3()
         {
-            bool success = _pathFinder.FindShortestRoute('E', 'C');
-            Assert.AreEqual(true, success);
-            var result = _pathFinder.GetNodeSequence();
+            var result = _pathFinder.GetShortestRoute('E', 'C');
 
             Assert.AreEqual('E', result[0].Name);
             Assert.AreEqual('B', result[1].Name);
@@ -56,9 +50,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod4()
         {
-            bool success = _pathFinder.FindShortestRoute('E', 'A');
-            Assert.AreEqual(true, success);
-            var result = _pathFinder.GetNodeSequence();
+            var result = _pathFinder.GetShortestRoute('E', 'A');
 
             Assert.AreEqual('E', result[0].Name);
             Assert.AreEqual('B', result[1].Name);
@@ -71,9 +63,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod5()
         {
-            bool success = _pathFinder.FindShortestRoute('A', 'E');
-            Assert.AreEqual(true, success);
-            var result = _pathFinder.GetNodeSequence();
+            var result = _pathFinder.GetShortestRoute('A', 'E');
 
             Assert.AreEqual('A', result[0].Name);
             Assert.AreEqual('C', result[1].Name);
@@ -88,17 +78,16 @@ namespace UnitTestProject1
         public void TestMethod6()
         {
             // Node 'I' does not exist, expect exception
-            _pathFinder.FindShortestRoute('A', 'I');
+            _pathFinder.GetShortestRoute('A', 'I');
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(Exception))]
         public void TestMethod7()
         {
             var path = new PathFinder.PathFinder(BrokenMaps.CreateSampleMap());
             // 'A' is disconnected, expect failure
-            bool success = path.FindShortestRoute('H', 'A');
-            Assert.AreEqual(false, success);
+            path.GetShortestRoute('H', 'A');
             // Should throw an exception because FindShortestRoute was unsuccessful
             path.GetDistance();
         }

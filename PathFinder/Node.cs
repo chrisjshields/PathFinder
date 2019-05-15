@@ -7,9 +7,9 @@ namespace PathFinder
     public class Node
     {
         public char Name { get; private set; }
-        internal Node PreviousNode { get; set; }
-        internal bool Visited { get; set; }
-        internal int Distance { get; set; }
+        public Node PreviousNode { get; set; }
+        public bool Visited { get; set; }
+        public int Distance { get; set; }
         private List<Neighbour> _neighbours { get; set; }
 
         public Node(char name)
@@ -23,12 +23,12 @@ namespace PathFinder
             return Name.ToString();
         }
 
-        internal void AddNeighbour(Node node, int distance)
+        public void AddNeighbour(Node node, int distance)
         {
             _neighbours.Add(new Neighbour(node, distance));
         }
 
-        internal IEnumerable<Neighbour> GetUnvisitedNeighbours()
+        public IEnumerable<Neighbour> GetUnvisitedNeighbours()
         {
             return _neighbours.Where(i => !i.Node.Visited);
         }

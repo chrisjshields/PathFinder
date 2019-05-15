@@ -7,16 +7,15 @@ namespace PathFinder
     public class PathFinder
     {
         private const string ERROR_BAD_DESTINATION = "Unable to reach destination";
-
+        
         private readonly Map _map;
-        public string Error { get; private set; }
 
         public PathFinder(Map map)
         {
             _map = map;
         }
 
-        public bool FindShortestRoute(char origin, char destination)
+        public List<Node> GetShortestRoute(char origin, char destination)
         {
             var originNode = _map.Nodes[origin];
             var destinationNode = _map.Nodes[destination];
@@ -25,7 +24,7 @@ namespace PathFinder
             while (!destinationNode.Visited)
             {
                 if (!_map.MoveToNextUnvisitedNode())
-                    return SetErrorAndReturnFalse(ERROR_BAD_DESTINATION);
+                    throw new Exception(ERROR_BAD_DESTINATION);
 
                 Debug.WriteLine($"Visiting {_map.CurrentLocation} ({_map.CurrentLocation.Distance})");
 
@@ -45,10 +44,15 @@ namespace PathFinder
                 _map.CurrentLocation.Visited = true;
             }
 
-            return true;
+            return GetNodeSequence();
+        }
+
+        public int GetDistance()
+        {
+            return _map.CurrentLocation.Distance;
         }
         
-        public List<Node> GetNodeSequence()
+        private List<Node> GetNodeSequence()
         {
             var breadCrumbs = new List<Node>();
             
@@ -60,15 +64,6 @@ namespace PathFinder
             return breadCrumbs;
         }
 
-        public int GetDistance()
-        {
-            // GetDistance should never be called if FindShortestRoute did not return true/success
-            if (!string.IsNullOrEmpty(Error))
-                throw new InvalidOperationException(Error);
-
-            return _map.CurrentLocation.Distance;
-        }
-
         private void Reset(Node originNode)
         {
             foreach (var node in _map.Nodes)
@@ -77,12 +72,6 @@ namespace PathFinder
                 node.Distance = node == originNode ? 0 : int.MaxValue;
                 node.PreviousNode = null;
             }
-        }
-
-        private bool SetErrorAndReturnFalse(string message)
-        {
-            Error = message;
-            return false;
         }
     }
 }

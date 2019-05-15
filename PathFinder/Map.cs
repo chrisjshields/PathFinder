@@ -5,9 +5,9 @@ namespace PathFinder
 {
     public class Map
     {
-        internal Nodes Nodes { get; }
-        internal List<Road> Roads { get; }
-        internal Node CurrentLocation { get; private set; }
+        public Nodes Nodes { get; }
+        public List<Road> Roads { get; }
+        public Node CurrentLocation { get; private set; }
 
         public Map(Nodes nodes, List<Road> roads)
         {
@@ -21,7 +21,7 @@ namespace PathFinder
             }
         }
 
-        internal bool MoveToNextUnvisitedNode()
+        public bool MoveToNextUnvisitedNode()
         {
             Node unvisitedNode = Nodes.Where(i => !i.Visited && i.Distance != int.MaxValue).OrderBy(i => i.Distance).FirstOrDefault();
             

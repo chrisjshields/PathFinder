@@ -2,9 +2,9 @@
 {
     public class Road
     {
-        internal Node Node1 { get; }
-        internal Node Node2 { get; }
-        internal int Distance { get; }
+        public Node Node1 { get; }
+        public Node Node2 { get; }
+        public int Distance { get; }
 
         public Road(Node node1, Node node2, int distance)
         {
